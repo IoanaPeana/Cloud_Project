@@ -5,6 +5,9 @@
 # ═══════════════════════════════════════════════════════════════════
 set -e
 
+# Always run from the directory where this script lives
+cd "$(dirname "$0")"
+
 # ── Colors ────────────────────────────────────────────────────────
 GREEN='\033[0;32m'; CYAN='\033[0;36m'; RED='\033[0;31m'; NC='\033[0m'
 info()    { echo -e "${CYAN}[INFO]${NC}  $*"; }
