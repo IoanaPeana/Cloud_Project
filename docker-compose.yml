@@ -1,35 +1,30 @@
-version: "3.8"
-
 services:
 
-  # ── Secret Management ─────────────────────────────────────────────
   vault:
     image: hashicorp/vault:1.15
     container_name: vault
     restart: unless-stopped
     environment:
-      VAULT_DEV_ROOT_TOKEN_ID: "${VAULT_TOKEN}"
+      VAULT_DEV_ROOT_TOKEN_ID: "devroottoken"
       VAULT_DEV_LISTEN_ADDRESS: "0.0.0.0:8200"
     cap_add:
       - IPC_LOCK
     networks:
       - internal
 
-  # ── Web Application ───────────────────────────────────────────────
   app:
     build: ./app
     container_name: app
     restart: unless-stopped
     environment:
       VAULT_ADDR: "http://vault:8200"
-      VAULT_TOKEN: "${VAULT_TOKEN}"
+      VAULT_TOKEN: "devroottoken"
       SECRET_PATH: "secret/data/myapp"
     depends_on:
       - vault
     networks:
       - internal
 
-  # ── Reverse Proxy (sole public entry point) ───────────────────────
   nginx:
     image: nginx:alpine
     container_name: nginx
@@ -43,7 +38,6 @@ services:
     networks:
       - internal
 
-  # ── Metrics Collector ─────────────────────────────────────────────
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
@@ -57,7 +51,6 @@ services:
       - "--path.procfs=/host/proc"
       - "--path.rootfs=/rootfs"
       - "--path.sysfs=/host/sys"
-      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
     networks:
       - internal
 
@@ -73,7 +66,6 @@ services:
     networks:
       - internal
 
-  # ── Visualization Dashboard ───────────────────────────────────────
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
