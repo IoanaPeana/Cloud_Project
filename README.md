@@ -1,7 +1,5 @@
 # Automated Infrastructure, Security & Monitoring Deployment
 
-> Academic Year 2024/2025 — Infrastructure & Security Exam
-
 ---
 
 ## Architecture Overview
@@ -38,10 +36,8 @@ git clone https://github.com/YOUR_USERNAME/infra-exam.git
 
 ### Command 2
 ```bash
-bash infra-exam/setup.sh
+bash CLoud_Project/setup.sh
 ```
-
-**Total: 2 commands → Grade 10 / Mastery**
 
 ---
 
@@ -65,7 +61,7 @@ bash infra-exam/setup.sh
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
-| App (via Nginx) | http://localhost | — |
+| App (via Nginx) | http://localhost:8080 | — |
 | Grafana | http://localhost:3000 | admin / admin |
 | Prometheus | http://localhost:9090 | — |
 
